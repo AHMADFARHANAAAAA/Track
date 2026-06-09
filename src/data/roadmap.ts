@@ -1,0 +1,241 @@
+// Data roadmap pembelajaran full stack modern.
+// Setiap item punya `yt`: kata kunci pencarian YouTube yang dikurasi agar hasilnya relevan.
+// (Pakai search query, bukan ID video tunggal, supaya link tidak mati & selalu dapat materi terbaru.)
+
+export type Item = {
+  id: string;
+  label: string;
+  yt: string; // query pencarian YouTube
+};
+
+export type Section = {
+  id: string;
+  emoji: string;
+  title: string;
+  blurb: string;
+  items: Item[];
+};
+
+export const ROADMAP: Section[] = [
+  {
+    id: "fondasi",
+    emoji: "🧱",
+    title: "0. Fondasi Wajib (Prasyarat)",
+    blurb:
+      "Jangan dilewati. Banyak developer stuck di level menengah karena fondasinya bolong.",
+    items: [
+      { id: "f-1", label: "Cara kerja komputer (CPU, RAM, storage)", yt: "how computers work cpu ram explained" },
+      { id: "f-2", label: "Cara kerja internet: DNS, IP, TCP/IP, HTTP/HTTPS", yt: "how the internet works dns http tcp ip" },
+      { id: "f-3", label: "Request–Response cycle (apa yang terjadi saat ketik google.com)", yt: "what happens when you type a url into browser" },
+      { id: "f-4", label: "Client vs Server", yt: "client server architecture explained" },
+      { id: "f-5", label: "HTTP status codes & methods (GET, POST, PUT, DELETE)", yt: "http methods status codes explained" },
+      { id: "f-6", label: "Command line / Terminal: navigasi & operasi file", yt: "command line terminal tutorial for beginners" },
+      { id: "f-7", label: "Shell scripting dasar (Bash / PowerShell)", yt: "bash scripting tutorial for beginners" },
+      { id: "f-8", label: "Git: add, commit, push, pull, clone", yt: "git tutorial for beginners crash course" },
+      { id: "f-9", label: "Git: branching, merging, resolusi konflik", yt: "git branching merging conflict resolution tutorial" },
+      { id: "f-10", label: "Pull Request workflow & Conventional Commits", yt: "github pull request workflow conventional commits" },
+      { id: "f-11", label: "Logika pemrograman: variabel, kondisional, loop, fungsi", yt: "programming basics variables loops functions" },
+      { id: "f-12", label: "Struktur data: array, object, set, stack, queue", yt: "data structures explained array stack queue" },
+      { id: "f-13", label: "Algoritma & Big-O (sorting, searching)", yt: "big o notation explained algorithms" },
+      { id: "f-14", label: "TypeScript dasar (type system sejak awal)", yt: "typescript tutorial for beginners crash course" },
+    ],
+  },
+  {
+    id: "frontend",
+    emoji: "🎨",
+    title: "1. Frontend Development",
+    blurb: "Membangun antarmuka yang dilihat & diinteraksikan pengguna.",
+    items: [
+      { id: "fe-1", label: "HTML semantic, accessibility (a11y), SEO dasar", yt: "semantic html accessibility tutorial" },
+      { id: "fe-2", label: "CSS: box model, Flexbox, Grid, responsive design", yt: "css flexbox grid responsive tutorial" },
+      { id: "fe-3", label: "CSS modern: custom properties, container queries, clamp()", yt: "modern css custom properties container queries" },
+      { id: "fe-4", label: "JavaScript ES6+: DOM, events, fetch, async/await, modules", yt: "javascript es6 dom fetch async await tutorial" },
+      { id: "fe-5", label: "Package manager: npm / pnpm / bun", yt: "npm pnpm bun package manager explained" },
+      { id: "fe-6", label: "Build tool: Vite", yt: "vite tutorial crash course" },
+      { id: "fe-7", label: "Linting & formatting: ESLint + Prettier", yt: "eslint prettier setup tutorial" },
+      { id: "fe-8", label: "React: hooks, state, props, component lifecycle", yt: "react tutorial for beginners hooks state props" },
+      { id: "fe-9", label: "State management: Zustand, TanStack Query", yt: "zustand tanstack query react state management" },
+      { id: "fe-10", label: "Routing: React Router / TanStack Router", yt: "react router tutorial" },
+      { id: "fe-11", label: "Next.js: App Router, SSR, SSG, Server Components", yt: "nextjs app router server components tutorial" },
+      { id: "fe-12", label: "Rendering strategies: CSR vs SSR vs SSG vs ISR", yt: "csr ssr ssg isr rendering explained nextjs" },
+      { id: "fe-13", label: "Tailwind CSS (utility-first)", yt: "tailwind css full tutorial" },
+      { id: "fe-14", label: "Component library: shadcn/ui + Radix", yt: "shadcn ui tutorial" },
+      { id: "fe-15", label: "Web performance: Core Web Vitals, lazy loading, code splitting", yt: "web performance core web vitals optimization" },
+      { id: "fe-16", label: "Accessibility (WCAG), ARIA, keyboard navigation", yt: "web accessibility wcag aria tutorial" },
+      { id: "fe-17", label: "Testing: Vitest, React Testing Library, Playwright (E2E)", yt: "react testing vitest playwright tutorial" },
+    ],
+  },
+  {
+    id: "backend",
+    emoji: "⚙️",
+    title: "2. Backend Development",
+    blurb: "Logika server, API, autentikasi, dan pemrosesan data.",
+    items: [
+      { id: "be-1", label: "Cara kerja server & HTTP server lifecycle", yt: "how web servers work backend explained" },
+      { id: "be-2", label: "REST API design (resource, versioning, idempotency)", yt: "rest api design best practices tutorial" },
+      { id: "be-3", label: "Authentication vs Authorization", yt: "authentication vs authorization explained" },
+      { id: "be-4", label: "Sessions, JWT, OAuth 2.0 / OpenID Connect", yt: "jwt oauth2 openid connect explained tutorial" },
+      { id: "be-5", label: "Middleware, validasi request, error handling", yt: "backend middleware validation error handling" },
+      { id: "be-6", label: "Environment config & secrets management", yt: "environment variables secrets management tutorial" },
+      { id: "be-7", label: "Node.js + TypeScript (Express / Fastify / Hono / NestJS)", yt: "nodejs typescript backend api tutorial fastify hono" },
+      { id: "be-8", label: "Alternatif: Python FastAPI / Go", yt: "fastapi python tutorial OR go backend tutorial" },
+      { id: "be-9", label: "GraphQL: schema, resolvers, kapan dipakai", yt: "graphql tutorial for beginners" },
+      { id: "be-10", label: "gRPC untuk komunikasi antar-service", yt: "grpc tutorial explained" },
+      { id: "be-11", label: "WebSockets / SSE (real-time)", yt: "websockets server sent events realtime tutorial" },
+      { id: "be-12", label: "tRPC (type-safe API)", yt: "trpc tutorial nextjs" },
+      { id: "be-13", label: "API documentation: OpenAPI / Swagger", yt: "openapi swagger api documentation tutorial" },
+      { id: "be-14", label: "Background jobs & message queues (Redis, RabbitMQ, Kafka)", yt: "message queue redis rabbitmq kafka tutorial" },
+      { id: "be-15", label: "Caching strategies (cache-aside, write-through, TTL)", yt: "caching strategies explained backend" },
+      { id: "be-16", label: "Rate limiting & throttling", yt: "api rate limiting tutorial" },
+      { id: "be-17", label: "Testing backend: unit, integration, contract", yt: "backend api testing tutorial integration" },
+    ],
+  },
+  {
+    id: "database",
+    emoji: "🗄️",
+    title: "3. Database & Penyimpanan Data",
+    blurb: "Menyimpan, menanyakan, dan menskalakan data dengan andal.",
+    items: [
+      { id: "db-1", label: "PostgreSQL: SELECT, JOIN, GROUP BY, subquery", yt: "postgresql sql tutorial for beginners joins" },
+      { id: "db-2", label: "Window functions & query lanjutan", yt: "sql window functions tutorial" },
+      { id: "db-3", label: "Schema design & normalisasi (1NF–3NF)", yt: "database normalization 1nf 2nf 3nf tutorial" },
+      { id: "db-4", label: "Indexing & query optimization (EXPLAIN ANALYZE)", yt: "database indexing query optimization explain analyze" },
+      { id: "db-5", label: "Transactions & ACID, isolation levels", yt: "database transactions acid isolation levels explained" },
+      { id: "db-6", label: "Migrations", yt: "database migrations tutorial" },
+      { id: "db-7", label: "MongoDB (document database)", yt: "mongodb tutorial for beginners" },
+      { id: "db-8", label: "Redis (cache / key-value)", yt: "redis tutorial for beginners caching" },
+      { id: "db-9", label: "Vector DB untuk AI (pgvector, Qdrant)", yt: "vector database pgvector qdrant tutorial" },
+      { id: "db-10", label: "ORM: Prisma / Drizzle", yt: "prisma drizzle orm tutorial typescript" },
+      { id: "db-11", label: "Connection pooling", yt: "database connection pooling explained" },
+      { id: "db-12", label: "Replication, sharding, CAP theorem", yt: "database replication sharding cap theorem explained" },
+    ],
+  },
+  {
+    id: "devops",
+    emoji: "🔧",
+    title: "4. DevOps & Infrastruktur",
+    blurb: "Menjalankan & mengoperasikan aplikasi di server / cloud.",
+    items: [
+      { id: "do-1", label: "Linux server: permissions, processes, systemd, logs", yt: "linux server administration tutorial for beginners" },
+      { id: "do-2", label: "SSH, firewall, reverse proxy (Nginx / Caddy)", yt: "nginx reverse proxy ssh tutorial" },
+      { id: "do-3", label: "DNS, SSL/TLS (Let's Encrypt)", yt: "ssl tls lets encrypt dns tutorial" },
+      { id: "do-4", label: "Load balancing dasar", yt: "load balancing explained tutorial" },
+      { id: "do-5", label: "Docker: images, containers, Dockerfile, multi-stage", yt: "docker tutorial for beginners full course" },
+      { id: "do-6", label: "Docker Compose (multi-container)", yt: "docker compose tutorial" },
+      { id: "do-7", label: "Container registry (Docker Hub, GHCR)", yt: "docker registry push image tutorial" },
+      { id: "do-8", label: "Kubernetes: pods, deployments, services, ingress", yt: "kubernetes tutorial for beginners" },
+      { id: "do-9", label: "Helm (package manager K8s)", yt: "helm kubernetes tutorial" },
+      { id: "do-10", label: "Cloud: AWS (EC2, S3, RDS, Lambda, VPC, IAM)", yt: "aws tutorial for beginners ec2 s3 lambda" },
+      { id: "do-11", label: "PaaS: Vercel / Railway / Render / Fly.io", yt: "deploy app vercel railway render tutorial" },
+      { id: "do-12", label: "Infrastructure as Code: Terraform", yt: "terraform tutorial for beginners" },
+      { id: "do-13", label: "Monitoring: Prometheus + Grafana", yt: "prometheus grafana monitoring tutorial" },
+      { id: "do-14", label: "Logging terpusat (Loki / ELK)", yt: "centralized logging loki elk stack tutorial" },
+      { id: "do-15", label: "Error tracking (Sentry) & observability", yt: "sentry error tracking observability tutorial" },
+    ],
+  },
+  {
+    id: "cicd",
+    emoji: "🔁",
+    title: "5. CI/CD",
+    blurb: "Build, test, dan rilis otomatis setiap perubahan kode.",
+    items: [
+      { id: "ci-1", label: "Konsep CI vs CD (integration vs delivery/deployment)", yt: "ci cd explained continuous integration deployment" },
+      { id: "ci-2", label: "Pipeline stages: lint → test → build → deploy", yt: "ci cd pipeline stages tutorial" },
+      { id: "ci-3", label: "GitHub Actions (workflow, secrets, caching)", yt: "github actions tutorial for beginners" },
+      { id: "ci-4", label: "Docker build & push dalam pipeline", yt: "github actions docker build push tutorial" },
+      { id: "ci-5", label: "Strategi deploy: blue-green, canary, rolling", yt: "blue green canary rolling deployment explained" },
+      { id: "ci-6", label: "Feature flags & rollback strategy", yt: "feature flags rollback deployment tutorial" },
+      { id: "ci-7", label: "Environment: dev → staging → production", yt: "dev staging production environments explained" },
+      { id: "ci-8", label: "Automated testing dalam pipeline & quality gates", yt: "automated testing ci pipeline quality gates" },
+      { id: "ci-9", label: "Semantic versioning & changelog otomatis", yt: "semantic versioning automated release tutorial" },
+    ],
+  },
+  {
+    id: "system-design",
+    emoji: "🏛️",
+    title: "6. System Design",
+    blurb: "Yang membedakan junior & senior. Pelajari setelah nyaman FE + BE.",
+    items: [
+      { id: "sd-1", label: "Scalability: vertical vs horizontal scaling", yt: "scalability vertical horizontal scaling explained" },
+      { id: "sd-2", label: "Latency vs throughput", yt: "latency vs throughput explained" },
+      { id: "sd-3", label: "Load balancing & caching layers (CDN, app, db)", yt: "load balancer caching cdn system design" },
+      { id: "sd-4", label: "Database scaling: replication, sharding, partitioning", yt: "database sharding partitioning system design" },
+      { id: "sd-5", label: "CAP theorem & trade-off konsistensi", yt: "cap theorem system design explained" },
+      { id: "sd-6", label: "Monolith vs Microservices vs Modular Monolith", yt: "monolith vs microservices explained" },
+      { id: "sd-7", label: "Event-driven architecture & pub/sub", yt: "event driven architecture pub sub explained" },
+      { id: "sd-8", label: "CQRS & Event Sourcing", yt: "cqrs event sourcing explained tutorial" },
+      { id: "sd-9", label: "API Gateway, circuit breaker, idempotency", yt: "api gateway circuit breaker idempotency system design" },
+      { id: "sd-10", label: "Saga pattern (distributed transactions)", yt: "saga pattern distributed transactions explained" },
+      { id: "sd-11", label: "Latihan: design URL shortener", yt: "system design url shortener interview" },
+      { id: "sd-12", label: "Latihan: design chat app / news feed", yt: "system design chat application news feed" },
+      { id: "sd-13", label: "Latihan: design rate limiter", yt: "system design rate limiter interview" },
+      { id: "sd-14", label: "Estimasi kapasitas (back-of-the-envelope)", yt: "back of envelope estimation system design" },
+    ],
+  },
+  {
+    id: "security",
+    emoji: "🔐",
+    title: "7. Keamanan (Security)",
+    blurb: "Sering diabaikan, padahal kritikal. Pelajari paralel dengan backend.",
+    items: [
+      { id: "se-1", label: "OWASP Top 10 (wajib paham)", yt: "owasp top 10 explained tutorial" },
+      { id: "se-2", label: "SQL Injection, XSS, CSRF, SSRF", yt: "sql injection xss csrf ssrf explained" },
+      { id: "se-3", label: "Password hashing (bcrypt / argon2)", yt: "password hashing bcrypt argon2 tutorial" },
+      { id: "se-4", label: "Authorization: RBAC / ABAC", yt: "rbac abac authorization explained" },
+      { id: "se-5", label: "HTTPS/TLS, CORS, Content Security Policy", yt: "cors csp https security headers explained" },
+      { id: "se-6", label: "Secrets management & vault", yt: "secrets management vault tutorial" },
+      { id: "se-7", label: "Input validation & sanitization", yt: "input validation sanitization security tutorial" },
+      { id: "se-8", label: "Dependency scanning (Dependabot, Snyk)", yt: "dependency scanning dependabot snyk tutorial" },
+    ],
+  },
+  {
+    id: "vibe-coding",
+    emoji: "🤖",
+    title: "8. Vibe Coding (AI-Assisted Development)",
+    blurb:
+      "Mengembangkan software dengan AI sebagai partner. Hanya efektif jika fundamental sudah kuat.",
+    items: [
+      { id: "vc-1", label: "Mindset: AI sebagai force multiplier, bukan pengganti pemahaman", yt: "vibe coding ai assisted development explained" },
+      { id: "vc-2", label: "Claude Code (CLI agentic coding)", yt: "claude code tutorial getting started" },
+      { id: "vc-3", label: "Cursor / GitHub Copilot / Windsurf", yt: "cursor ai code editor tutorial" },
+      { id: "vc-4", label: "Prompt engineering untuk coding", yt: "prompt engineering for coding tutorial" },
+      { id: "vc-5", label: "Context management (beri AI file relevan)", yt: "ai coding context management best practices" },
+      { id: "vc-6", label: "Memecah tugas besar & verifikasi kritis output AI", yt: "ai coding workflow breaking down tasks review" },
+      { id: "vc-7", label: "Praktik aman: test, jangan commit secrets, waspada halusinasi", yt: "ai coding best practices security hallucination" },
+      { id: "vc-8", label: "Integrasi LLM ke aplikasi (Claude API, function calling)", yt: "claude api function calling tutorial" },
+      { id: "vc-9", label: "RAG + vector database", yt: "rag retrieval augmented generation tutorial" },
+      { id: "vc-10", label: "AI agents & streaming responses", yt: "ai agents llm streaming tutorial" },
+    ],
+  },
+  {
+    id: "soft-skills",
+    emoji: "🧠",
+    title: "9. Soft Skills & Karier",
+    blurb: "Skill non-teknis yang menentukan pertumbuhan kariermu.",
+    items: [
+      { id: "ss-1", label: "Debugging sistematis (bukan trial-error)", yt: "systematic debugging techniques tutorial" },
+      { id: "ss-2", label: "Membaca dokumentasi & belajar mandiri", yt: "how to read documentation effectively developer" },
+      { id: "ss-3", label: "Komunikasi teknis & menulis dokumentasi", yt: "technical writing for developers tutorial" },
+      { id: "ss-4", label: "Code review (memberi & menerima feedback)", yt: "code review best practices tutorial" },
+      { id: "ss-5", label: "Agile / Scrum dasar", yt: "agile scrum explained for beginners" },
+      { id: "ss-6", label: "Membangun portofolio & kontribusi open source", yt: "developer portfolio open source contribution guide" },
+      { id: "ss-7", label: "Personal branding (GitHub, LinkedIn, blog)", yt: "developer personal branding github linkedin tips" },
+    ],
+  },
+  {
+    id: "projects",
+    emoji: "💼",
+    title: "10. Proyek Portofolio",
+    blurb:
+      "Proyek > sertifikat. Untuk tiap proyek: pakai Git, tulis test, deploy live, setup CI/CD.",
+    items: [
+      { id: "pr-1", label: "Task Manager / Notes App (CRUD, auth, real-time)", yt: "build fullstack task manager nextjs tutorial" },
+      { id: "pr-2", label: "E-commerce Mini (cart, checkout, payment, admin)", yt: "build ecommerce nextjs stripe tutorial" },
+      { id: "pr-3", label: "Social Platform (feed, follow, like, notifications)", yt: "build social media app fullstack tutorial" },
+      { id: "pr-4", label: "SaaS Dashboard (multi-tenant, subscription, RBAC)", yt: "build saas dashboard nextjs tutorial" },
+      { id: "pr-5", label: "AI-Powered App (LLM, chat, RAG)", yt: "build ai app rag chat nextjs tutorial" },
+    ],
+  },
+];
+
+export const TOTAL_ITEMS = ROADMAP.reduce((n, s) => n + s.items.length, 0);

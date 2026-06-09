@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Full Stack Learning Tracker
 
-## Getting Started
+Aplikasi Next.js untuk **melacak progres belajar full stack modern** satu per satu —
+frontend, backend, DevOps, system design, CI/CD, security, vibe coding, dan lainnya.
+Setiap topik dilengkapi tombol **Materi** yang membuka pencarian YouTube terkurasi
+(bisa pilih bahasa 🇮🇩 Indonesia atau 🌐 Inggris).
 
-First, run the development server:
+Pendamping dari file `roadmap-fullstack-modern.md`.
+
+## ✨ Fitur
+
+- ✅ **Checklist interaktif** — centang tiap topik yang sudah kamu kuasai
+- 📊 **Progress bar** total & per-section, dengan persentase
+- 🎥 **Materi YouTube** per topik (toggle bahasa ID/EN)
+- 🔍 **Filter** Semua / Belum / Selesai
+- 💾 **Tersimpan otomatis** di browser (localStorage) — aman dari refresh & redeploy
+- 🌙 Tema gelap, responsif (mobile-friendly)
+
+## 🛠️ Tech Stack
+
+- **Next.js 16** (App Router) + **React 19**
+- **TypeScript**
+- **Tailwind CSS v4**
+- Tanpa backend/database — progres disimpan di `localStorage` (fully static)
+
+## 🏃 Menjalankan di Lokal
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install      # sekali saja
+npm run dev      # development server → http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build & jalankan versi produksi secara lokal:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+npm run start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ☁️ Deploy ke Production
 
-## Learn More
+### Cara Tercepat — Vercel (rekomendasi)
 
-To learn more about Next.js, take a look at the following resources:
+1. Push repo ini ke GitHub:
+   ```bash
+   git add -A
+   git commit -m "feat: learning tracker app"
+   gh repo create learning-tracker --public --source=. --push
+   # atau buat repo manual di github.com lalu:
+   # git remote add origin https://github.com/<username>/learning-tracker.git
+   # git push -u origin main
+   ```
+2. Buka [vercel.com/new](https://vercel.com/new), **Import** repo `learning-tracker`.
+3. Vercel mendeteksi Next.js otomatis — klik **Deploy**. Selesai. 🎉
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Setiap `git push` berikutnya akan auto-deploy (CI/CD bawaan Vercel).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Alternatif — Vercel CLI
 
-## Deploy on Vercel
+```bash
+npm i -g vercel
+vercel          # preview deploy
+vercel --prod   # production deploy
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Alternatif lain
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Karena app ini fully static + Next.js, juga bisa di-deploy ke
+**Netlify**, **Cloudflare Pages**, **Railway**, atau **Render** tanpa konfigurasi khusus.
+
+## 📁 Struktur Proyek
+
+```
+src/
+├─ app/
+│  ├─ layout.tsx        # root layout + metadata + tema gelap
+│  ├─ page.tsx          # halaman utama
+│  └─ globals.css       # Tailwind + variabel tema
+├─ components/
+│  ├─ ChecklistApp.tsx  # orkestrasi: header, progres, filter, bahasa
+│  ├─ SectionCard.tsx   # kartu per-section + daftar checklist
+│  └─ ProgressBar.tsx   # bar progres reusable
+├─ data/
+│  └─ roadmap.ts        # SEMUA data checklist + query YouTube (edit di sini)
+├─ hooks/
+│  └─ useProgress.ts    # persistensi localStorage
+└─ lib/
+   └─ youtube.ts        # builder URL pencarian YouTube
+```
+
+## ✏️ Menambah / Mengubah Topik
+
+Semua konten ada di **`src/data/roadmap.ts`**. Tambahkan item ke array `items`
+pada section terkait:
+
+```ts
+{ id: "fe-99", label: "Topik baru kamu", yt: "kata kunci pencarian youtube" }
+```
+
+`id` harus unik. `yt` adalah query pencarian YouTube yang akan dibuka saat tombol
+**Materi** diklik.
