@@ -12,6 +12,10 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
+# Subpath tempat app dilayani Nginx. Di-inline saat build (tidak bisa diubah
+# tanpa rebuild). Override: docker build --build-arg NEXT_PUBLIC_BASE_PATH=/lain
+ARG NEXT_PUBLIC_BASE_PATH=/learning-tracker
+ENV NEXT_PUBLIC_BASE_PATH=$NEXT_PUBLIC_BASE_PATH
 RUN npm run build
 
 # ---- Tahap 3: runtime produksi ----

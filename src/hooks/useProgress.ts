@@ -7,6 +7,11 @@ type ProgressMap = Record<string, boolean>;
 // Seberapa sering menyegarkan progres dari server agar tersinkron antar-pengguna.
 const POLL_MS = 5000;
 
+// Prefix subpath (mis. "/learning-tracker" di produksi). fetch() TIDAK otomatis
+// mendapat basePath, jadi tempelkan manual ke endpoint API.
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const API_URL = `${BASE}/api/progress`;
+
 /**
  * Progres BERSAMA: dibaca & disimpan ke server (/api/progress), bukan localStorage.
  * Artinya apa pun yang ditandai oleh siapa pun terlihat oleh semua pengguna.
@@ -28,7 +33,7 @@ export function useProgress() {
 
   const fetchProgress = useCallback(async () => {
     try {
-      const res = await fetch("/api/progress", { cache: "no-store" });
+      const res = await fetch(API_URL, { cache: "no-store" });
       if (!res.ok) return;
       const data = (await res.json()) as { done?: ProgressMap };
       if (savingRef.current === 0) setDone(data.done ?? {});
@@ -59,7 +64,7 @@ export function useProgress() {
       setDone(optimistic);
       savingRef.current += 1;
       try {
-        const res = await fetch("/api/progress", {
+        const res = await fetch(API_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
