@@ -1,53 +1,106 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-
-const STORAGE_KEY = "lt-progress-v1";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type ProgressMap = Record<string, boolean>;
 
+// Seberapa sering menyegarkan progres dari server agar tersinkron antar-pengguna.
+const POLL_MS = 5000;
+
 /**
- * Menyimpan status checklist (id -> selesai) di localStorage.
- * Persisten antar-refresh & antar-deploy karena tersimpan di browser pengguna.
+ * Progres BERSAMA: dibaca & disimpan ke server (/api/progress), bukan localStorage.
+ * Artinya apa pun yang ditandai oleh siapa pun terlihat oleh semua pengguna.
+ * - Update optimistik: UI berubah seketika, lalu dikonfirmasi oleh server.
+ * - Polling berkala menyegarkan perubahan dari pengguna lain.
  */
 export function useProgress() {
   const [done, setDone] = useState<ProgressMap>({});
   const [loaded, setLoaded] = useState(false);
 
-  // Muat dari localStorage saat mount.
+  // Cermin `done` terkini untuk dibaca di dalam callback tanpa memicu re-render.
+  const doneRef = useRef<ProgressMap>({});
   useEffect(() => {
+    doneRef.current = done;
+  }, [done]);
+
+  // Jumlah penyimpanan yang sedang berjalan; selama > 0 polling tidak menimpa UI.
+  const savingRef = useRef(0);
+
+  const fetchProgress = useCallback(async () => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setDone(JSON.parse(raw));
+      const res = await fetch("/api/progress", { cache: "no-store" });
+      if (!res.ok) return;
+      const data = (await res.json()) as { done?: ProgressMap };
+      if (savingRef.current === 0) setDone(data.done ?? {});
     } catch {
-      // abaikan data rusak
+      // Offline / gangguan jaringan — pertahankan state terakhir.
     }
-    setLoaded(true);
   }, []);
 
-  // Simpan tiap kali berubah (setelah load awal).
+  // Muat awal.
   useEffect(() => {
-    if (!loaded) return;
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(done));
-    } catch {
-      // storage penuh / diblokir — abaikan
-    }
-  }, [done, loaded]);
+    (async () => {
+      await fetchProgress();
+      setLoaded(true);
+    })();
+  }, [fetchProgress]);
 
-  const toggle = useCallback((id: string) => {
-    setDone((prev) => ({ ...prev, [id]: !prev[id] }));
-  }, []);
+  // Polling agar progres semua pengguna tetap sinkron.
+  useEffect(() => {
+    const t = setInterval(fetchProgress, POLL_MS);
+    return () => clearInterval(t);
+  }, [fetchProgress]);
 
-  const setMany = useCallback((ids: string[], value: boolean) => {
-    setDone((prev) => {
-      const next = { ...prev };
-      for (const id of ids) next[id] = value;
-      return next;
-    });
-  }, []);
+  const save = useCallback(
+    async (
+      body: Record<string, unknown>,
+      optimistic: (prev: ProgressMap) => ProgressMap,
+    ) => {
+      setDone(optimistic);
+      savingRef.current += 1;
+      try {
+        const res = await fetch("/api/progress", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        if (res.ok) {
+          const data = (await res.json()) as { done?: ProgressMap };
+          setDone(data.done ?? {});
+        } else {
+          await fetchProgress(); // gagal — pulihkan dari server
+        }
+      } catch {
+        await fetchProgress();
+      } finally {
+        savingRef.current -= 1;
+      }
+    },
+    [fetchProgress],
+  );
 
-  const reset = useCallback(() => setDone({}), []);
+  const toggle = useCallback(
+    (id: string) => {
+      const value = !doneRef.current[id];
+      void save({ ids: [id], value }, (prev) => ({ ...prev, [id]: value }));
+    },
+    [save],
+  );
+
+  const setMany = useCallback(
+    (ids: string[], value: boolean) => {
+      void save({ ids, value }, (prev) => {
+        const next = { ...prev };
+        for (const id of ids) next[id] = value;
+        return next;
+      });
+    },
+    [save],
+  );
+
+  const reset = useCallback(() => {
+    void save({ reset: true }, () => ({}));
+  }, [save]);
 
   return { done, loaded, toggle, setMany, reset };
 }

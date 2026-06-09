@@ -28,11 +28,11 @@ export default function ChecklistApp() {
     [done],
   );
 
-  // Hindari hydration mismatch: tampilkan skeleton sampai localStorage termuat.
+  // Hindari kedipan: tampilkan keadaan tenang sampai progres bersama termuat.
   if (!loaded) {
     return (
       <div className="mx-auto max-w-4xl px-4 py-20 text-center text-slate-500">
-        Memuat progres…
+        Sebentar ya, sedang menyiapkan progres kita…
       </div>
     );
   }
@@ -41,13 +41,15 @@ export default function ChecklistApp() {
     <main className="mx-auto max-w-4xl px-4 pb-24 pt-10 sm:pt-14">
       {/* Header */}
       <div className="mb-8 text-center">
-        <h1 className="bg-gradient-to-r from-sky-400 via-cyan-300 to-emerald-300 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl">
-          🚀 Full Stack Learning Tracker
+        <h1 className="text-3xl font-semibold tracking-tight text-slate-100 sm:text-4xl">
+          Perjalanan Belajar Full Stack
         </h1>
-        <p className="mx-auto mt-3 max-w-2xl text-sm text-slate-400 sm:text-base">
-          Lacak progres belajarmu satu per satu. Tiap topik punya tombol{" "}
-          <span className="font-medium text-red-400">Materi</span> ke YouTube.
-          Progres tersimpan otomatis di browser ini.
+        <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-400 sm:text-base">
+          Kita belajar bersama. Setiap topik yang kamu tandai selesai langsung
+          terlihat oleh semua orang—jadi progres di sini benar-benar milik kita
+          bersama. Tiap topik punya tautan{" "}
+          <span className="font-medium text-slate-300">Materi</span> ke YouTube,
+          ambil yang paling cocok untukmu.
         </p>
       </div>
 
@@ -56,7 +58,7 @@ export default function ChecklistApp() {
         <ProgressBar
           value={completedCount}
           total={TOTAL_ITEMS}
-          label="Total progres"
+          label="Progres kita bersama"
           size="lg"
         />
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
@@ -90,8 +92,8 @@ export default function ChecklistApp() {
               <div className="flex gap-1 rounded-lg bg-slate-800/80 p-1">
                 {(
                   [
-                    ["id", "🇮🇩 ID"],
-                    ["en", "🌐 EN"],
+                    ["id", "Indonesia"],
+                    ["en", "English"],
                   ] as [Lang, string][]
                 ).map(([key, txt]) => (
                   <button
@@ -111,7 +113,11 @@ export default function ChecklistApp() {
 
             <button
               onClick={() => {
-                if (confirm("Reset semua progres? Tindakan ini tidak bisa dibatalkan.")) {
+                if (
+                  confirm(
+                    "Reset progres untuk SEMUA orang? Karena progres ini dibagikan bersama, tindakan ini akan menghapus centang milik semua pengguna dan tidak bisa dibatalkan.",
+                  )
+                ) {
                   reset();
                 }
               }}
@@ -138,12 +144,12 @@ export default function ChecklistApp() {
         ))}
       </div>
 
-      <footer className="mt-12 text-center text-xs text-slate-600">
-        Dibuat sebagai pendamping{" "}
-        <span className="text-slate-400">roadmap-fullstack-modern.md</span> · Progres
-        disimpan lokal di browser ·{" "}
+      <footer className="mt-12 text-center text-xs leading-relaxed text-slate-600">
+        Teman seperjalanan untuk{" "}
+        <span className="text-slate-400">roadmap-fullstack-modern.md</span>. Progres
+        dibagikan untuk semua pembelajar · sejauh ini{" "}
         <span className="text-slate-400">{completedCount}</span> dari {TOTAL_ITEMS} topik
-        selesai
+        sudah dituntaskan bersama. Tetap semangat, satu langkah tiap hari.
       </footer>
     </main>
   );

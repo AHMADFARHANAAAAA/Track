@@ -20,6 +20,9 @@
 # production
 /build
 
+# progres bersama (data runtime, jangan di-commit)
+/data
+
 # misc
 .DS_Store
 *.pem

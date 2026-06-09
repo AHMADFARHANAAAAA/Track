@@ -31,6 +31,12 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Folder progres bersama. Dimiliki user non-root agar bisa ditulis,
+# dan diisi oleh volume saat runtime supaya progres awet antar-rebuild.
+RUN mkdir -p /app/data && chown nextjs:nodejs /app/data
+ENV DATA_DIR=/app/data
+VOLUME /app/data
+
 USER nextjs
 EXPOSE 3000
 CMD ["node", "server.js"]

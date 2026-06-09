@@ -21,11 +21,8 @@ function YouTubeButton({ query, lang }: { query: string; lang: Lang }) {
       target="_blank"
       rel="noopener noreferrer"
       title="Cari materi di YouTube"
-      className="flex shrink-0 items-center gap-1.5 rounded-md bg-red-500/10 px-2.5 py-1.5 text-xs font-medium text-red-400 transition hover:bg-red-500/20"
+      className="shrink-0 rounded-md bg-slate-800 px-2.5 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-slate-700 hover:text-white"
     >
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-        <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z" />
-      </svg>
       Materi
     </a>
   );
@@ -66,13 +63,13 @@ function ItemRow({
           onClick={() => setShowSoal((s) => !s)}
           aria-expanded={showSoal}
           title="Lihat soal / tantangan praktik"
-          className={`flex shrink-0 items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition ${
+          className={`shrink-0 rounded-md px-2.5 py-1.5 text-xs font-medium transition ${
             showSoal
               ? "bg-amber-500/20 text-amber-300"
               : "bg-amber-500/10 text-amber-400 hover:bg-amber-500/20"
           }`}
         >
-          🎯 Soal
+          {showSoal ? "Tutup soal" : "Soal"}
         </button>
         <YouTubeButton query={item.yt} lang={lang} />
       </div>
@@ -123,25 +120,21 @@ export default function SectionCard({
           className="flex flex-1 items-start gap-3 text-left"
           aria-expanded={open}
         >
-          <span className="text-2xl leading-none">{section.emoji}</span>
           <span className="flex-1">
-            <span className="flex items-center gap-2">
+            <span className="flex flex-wrap items-center gap-2">
               <h2 className="text-base font-semibold text-slate-100 sm:text-lg">
                 {section.title}
               </h2>
               {allDone && (
                 <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-400">
-                  ✓ Selesai
+                  Selesai
                 </span>
               )}
             </span>
             <p className="mt-0.5 text-sm text-slate-400">{section.blurb}</p>
           </span>
-          <span
-            className="text-slate-500 transition-transform"
-            style={{ transform: open ? "rotate(180deg)" : "none" }}
-          >
-            ▾
+          <span className="shrink-0 text-xs font-medium text-slate-500">
+            {open ? "Sembunyikan" : "Tampilkan"}
           </span>
         </button>
         <div className="w-full shrink-0 sm:w-48">
@@ -205,8 +198,8 @@ export default function SectionCard({
                   <div className="flex-1">
                     <label htmlFor={cap.id} className="cursor-pointer">
                       <span className="flex flex-wrap items-center gap-2">
-                        <span className="rounded-md bg-violet-500/20 px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-violet-300">
-                          🏆 Capstone
+                        <span className="rounded-md bg-violet-500/20 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-violet-300">
+                          Proyek akhir
                         </span>
                         <span
                           className={`text-sm font-semibold ${
@@ -224,7 +217,9 @@ export default function SectionCard({
                           key={idx}
                           className="flex gap-2 text-xs text-slate-400"
                         >
-                          <span className="mt-0.5 shrink-0 text-violet-400">▸</span>
+                          <span className="mt-0.5 shrink-0 font-medium text-violet-400">
+                            {idx + 1}.
+                          </span>
                           <span>{c}</span>
                         </li>
                       ))}
