@@ -2,22 +2,21 @@
 
 import { useState } from "react";
 import type { Item, Section } from "@/data/roadmap";
-import { ytSearchUrl, type Lang } from "@/lib/youtube";
+import { ytSearchUrl } from "@/lib/youtube";
 import ProgressBar from "./ProgressBar";
 
 type Props = {
   section: Section;
   done: Record<string, boolean>;
-  lang: Lang;
   filter: "all" | "todo" | "done";
   onToggle: (id: string) => void;
   onSetMany: (ids: string[], value: boolean) => void;
 };
 
-function YouTubeButton({ query, lang }: { query: string; lang: Lang }) {
+function YouTubeButton({ query }: { query: string }) {
   return (
     <a
-      href={ytSearchUrl(query, lang)}
+      href={ytSearchUrl(query)}
       target="_blank"
       rel="noopener noreferrer"
       title="Cari materi di YouTube"
@@ -31,12 +30,10 @@ function YouTubeButton({ query, lang }: { query: string; lang: Lang }) {
 function ItemRow({
   item,
   checked,
-  lang,
   onToggle,
 }: {
   item: Item;
   checked: boolean;
-  lang: Lang;
   onToggle: (id: string) => void;
 }) {
   return (
@@ -57,7 +54,7 @@ function ItemRow({
         >
           {item.label}
         </label>
-        <YouTubeButton query={item.yt} lang={lang} />
+        <YouTubeButton query={item.yt} />
       </div>
     </li>
   );
@@ -66,7 +63,6 @@ function ItemRow({
 export default function SectionCard({
   section,
   done,
-  lang,
   filter,
   onToggle,
   onSetMany,
@@ -144,7 +140,6 @@ export default function SectionCard({
                   key={item.id}
                   item={item}
                   checked={!!done[item.id]}
-                  lang={lang}
                   onToggle={onToggle}
                 />
               ))}

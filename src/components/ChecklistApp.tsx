@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ROADMAP, TOTAL_ITEMS } from "@/data/roadmap";
 import { useProgress } from "@/hooks/useProgress";
-import type { Lang } from "@/lib/youtube";
 import ProgressBar from "./ProgressBar";
 import SectionCard from "./SectionCard";
 
@@ -12,16 +11,6 @@ type Filter = "all" | "todo" | "done";
 export default function ChecklistApp() {
   const { done, loaded, toggle, setMany, reset } = useProgress();
   const [filter, setFilter] = useState<Filter>("all");
-  const [lang, setLang] = useState<Lang>("id");
-
-  // Muat preferensi bahasa.
-  useEffect(() => {
-    const saved = localStorage.getItem("lt-lang");
-    if (saved === "en" || saved === "id") setLang(saved);
-  }, []);
-  useEffect(() => {
-    localStorage.setItem("lt-lang", lang);
-  }, [lang]);
 
   const completedCount = useMemo(
     () => Object.values(done).filter(Boolean).length,
@@ -58,7 +47,7 @@ export default function ChecklistApp() {
         <ProgressBar
           value={completedCount}
           total={TOTAL_ITEMS}
-          label="Progres kita bersama"
+          label="Progres"
           size="lg"
         />
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
@@ -86,31 +75,6 @@ export default function ChecklistApp() {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Toggle bahasa materi */}
-            <div className="flex items-center gap-1.5 text-xs text-slate-400">
-              <span>Materi:</span>
-              <div className="flex gap-1 rounded-lg bg-slate-800/80 p-1">
-                {(
-                  [
-                    ["id", "Indonesia"],
-                    ["en", "English"],
-                  ] as [Lang, string][]
-                ).map(([key, txt]) => (
-                  <button
-                    key={key}
-                    onClick={() => setLang(key)}
-                    className={`rounded-md px-2 py-1 font-medium transition ${
-                      lang === key
-                        ? "bg-slate-600 text-white"
-                        : "text-slate-400 hover:text-slate-200"
-                    }`}
-                  >
-                    {txt}
-                  </button>
-                ))}
-              </div>
-            </div>
-
             <button
               onClick={() => {
                 if (
@@ -136,7 +100,6 @@ export default function ChecklistApp() {
             key={section.id}
             section={section}
             done={done}
-            lang={lang}
             filter={filter}
             onToggle={toggle}
             onSetMany={setMany}
