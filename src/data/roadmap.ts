@@ -222,20 +222,6 @@ export const ROADMAP: Section[] = [
       { id: "ss-7", label: "Personal branding (GitHub, LinkedIn, blog)", yt: "developer personal branding github linkedin tips" },
     ],
   },
-  {
-    id: "projects",
-    emoji: "💼",
-    title: "10. Proyek Portofolio",
-    blurb:
-      "Proyek > sertifikat. Untuk tiap proyek: pakai Git, tulis test, deploy live, setup CI/CD.",
-    items: [
-      { id: "pr-1", label: "Task Manager / Notes App (CRUD, auth, real-time)", yt: "build fullstack task manager nextjs tutorial" },
-      { id: "pr-2", label: "E-commerce Mini (cart, checkout, payment, admin)", yt: "build ecommerce nextjs stripe tutorial" },
-      { id: "pr-3", label: "Social Platform (feed, follow, like, notifications)", yt: "build social media app fullstack tutorial" },
-      { id: "pr-4", label: "SaaS Dashboard (multi-tenant, subscription, RBAC)", yt: "build saas dashboard nextjs tutorial" },
-      { id: "pr-5", label: "AI-Powered App (LLM, chat, RAG)", yt: "build ai app rag chat nextjs tutorial" },
-    ],
-  },
 ];
 
 // Total seluruh item lintas section.
